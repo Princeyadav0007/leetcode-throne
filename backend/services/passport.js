@@ -22,7 +22,8 @@ passport.use(new GoogleStrategy({
     let user = await User.findOne({ googleId: profile.id });
     if (!user) {
       // Create new user
-      const username = profile.emails?.[0]?.value?.split('@')[0] || profile.displayName;
+      const username = (profile.emails?.[0]?.value?.split('@')[0] || profile.displayName)
+  .slice(0, 20);
       user = await User.create({
         googleId: profile.id,
         username: username,
